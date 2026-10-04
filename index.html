@@ -480,6 +480,19 @@
       font-size: 0.95rem;
     }
 
+    #hotel:invalid,
+    #guests:invalid,
+    #roomtype:invalid,
+    #checkin:invalid,
+    #checkout:invalid {
+      color: #757575;
+    }
+
+    #checkin,
+    #checkout {
+      color-scheme: dark;
+    }
+
     .form-row {
       display: flex;
       gap: 1rem;
@@ -734,15 +747,7 @@
     </div>
   </section>
 
-  <!-- 3. HERITAGE DETAIL VIEW -->
-  <section id="view-heritage-detail" class="view-section">
-    <button class="back-btn" onclick="showView('heritage')">&larr; Back to Heritage List</button>
-    <div class="detail-container" id="heritage-detail-content">
-      <!-- Content populated dynamically -->
-    </div>
-  </section>
-
-  <!-- 4. HOTEL BOOKING VIEW -->
+  <!-- 3. HOTEL BOOKING VIEW -->
   <section id="view-booking" class="view-section">
     <div class="form-container">
       <h2>Reserve Your Accommodation</h2>
@@ -763,7 +768,8 @@
         </div>
         <div class="form-group">
           <label for="hotel">Select Hotel</label>
-          <select id="hotel">
+          <select id="hotel" required>
+            <option value="" disabled selected>Choose a hotel</option>
             <option>The Oberoi Grand Kolkata</option>
             <option>Taj Bengal Kolkata</option>
             <option>ITC Sonar / Royal Bengal</option>
@@ -784,11 +790,24 @@
         <div class="form-row">
           <div class="form-group">
             <label for="guests">Guests</label>
-            <input type="number" id="guests" min="1" max="10" value="2">
+            <select id="guests" required>
+              <option value="" disabled selected>Choose number of guests</option>
+              <option value="1">1 guest</option>
+              <option value="2">2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+              <option value="5">5 guests</option>
+              <option value="6">6 guests</option>
+              <option value="7">7 guests</option>
+              <option value="8">8 guests</option>
+              <option value="9">9 guests</option>
+              <option value="10">10 guests</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="roomtype">Room Type</label>
-            <select id="roomtype">
+            <select id="roomtype" required>
+              <option value="" disabled selected>Choose a room type</option>
               <option>Deluxe Room</option>
               <option>Executive Suite</option>
               <option>Heritage Grand Suite</option>
@@ -804,7 +823,7 @@
     </div>
   </section>
 
-  <!-- 5. GALLERY VIEW -->
+  <!-- 4. GALLERY VIEW -->
   <section id="view-gallery" class="view-section">
     <div class="section-title">
       <h2>KOLKATA GALLERY</h2>
@@ -840,6 +859,7 @@
     const heritageSites = [
       {
         id: 1,
+        slug: "victoria-memorial",
         name: "Victoria Memorial",
         img: "image_folder/Victoria-Memorial_600.jpg",
         desc: "Built between 1906 and 1921, the Victoria Memorial is a grand marble building dedicated to the memory of Queen Victoria.",
@@ -847,6 +867,7 @@
       },
       {
         id: 2,
+        slug: "howrah-bridge",
         name: "Howrah Bridge",
         img: "image_folder/KOLKATA  COVER.jpg",
         desc: "An iconic balanced cantilever bridge over the Hooghly River, connecting Kolkata and Howrah.",
@@ -854,6 +875,7 @@
       },
       {
         id: 3,
+        slug: "dakshineswar-kali-temple",
         name: "Dakshineswar Kali Temple",
         img: "image_folder/dk.jpg",
         desc: "A famous Navaratna Hindu temple located on the eastern bank of the Hooghly River.",
@@ -861,6 +883,7 @@
       },
       {
         id: 4,
+        slug: "indian-museum",
         name: "Indian Museum",
         img: "image_folder/im.jpg",
         desc: "The ninth oldest museum in the world and the largest museum in India.",
@@ -868,6 +891,7 @@
       },
       {
         id: 5,
+        slug: "marble-palace",
         name: "Marble Palace",
         img: "image_folder/mp.jpg",
         desc: "A palatial 19th-century mansion in North Kolkata known for its marble walls, floors, and sculptures.",
@@ -875,6 +899,7 @@
       },
       {
         id: 6,
+        slug: "st-pauls-cathedral",
         name: "St. Paul's Cathedral",
         img: "image_folder/stpc.jpg",
         desc: "An Anglican cathedral noted for its Gothic Revival architecture and stained glass windows.",
@@ -882,6 +907,7 @@
       },
       {
         id: 7,
+        slug: "kalighat-kali-temple",
         name: "Kalighat Kali Temple",
         img: "image_folder/kt.png",
         desc: "One of the 51 Shakti Peethas, dedicated to Goddess Kali.",
@@ -889,6 +915,7 @@
       },
       {
         id: 8,
+        slug: "jorasanko-thakur-bari",
         name: "Jorasanko Thakur Bari",
         img: "image_folder/jtb.jpg",
         desc: "The ancestral home of the Tagore family, where Nobel laureate Rabindranath Tagore was born and spent his childhood.",
@@ -896,6 +923,7 @@
       },
       {
         id: 9,
+        slug: "prinsep-ghat",
         name: "Princep Ghat",
         img: "image_folder/pg.avif",
         desc: "A ghat built along the Kolkata bank of the Hooghly River featuring Greek and Gothic architectural styles.",
@@ -903,6 +931,7 @@
       },
       {
         id: 10,
+        slug: "belur-math",
         name: "Belur Math",
         img: "image_folder/bm.jpg",
         desc: "The headquarters of the Ramakrishna Math and Mission on the west bank of the Hooghly.",
@@ -910,6 +939,7 @@
       },
       {
         id: 11,
+        slug: "town-hall",
         name: "Town Hall",
         img: "image_folder/th.jpg",
         desc: "A Roman Doric style heritage building constructed in 1813 for public gatherings.",
@@ -917,6 +947,7 @@
       },
       {
         id: 12,
+        slug: "writers-building",
         name: "Writer's Building",
         img: "image_folder/wrb.jpg",
         desc: "The historic secretariat building of the state government of West Bengal.",
@@ -924,6 +955,7 @@
       },
       {
         id: 13,
+        slug: "sobhabazar-rajbari",
         name: "Sobhabazar Rajbari",
         img: "image_folder/sbr.jpg",
         desc: "One of the oldest royal houses in Kolkata, famed for its grand traditional Durga Puja celebrations.",
@@ -931,6 +963,7 @@
       },
       {
         id: 14,
+        slug: "vidyasagar-setu",
         name: "Vidyasagar Setu",
         img: "image_folder/vss.jpg",
         desc: "Also known as the Second Hooghly Bridge, a toll bridge linking Kolkata and Howrah.",
@@ -938,6 +971,7 @@
       },
       {
         id: 15,
+        slug: "st-johns-church",
         name: "St. John's Church",
         img: "image_folder/sjc.jpg",
         desc: "One of the oldest public buildings in Kolkata, containing the tomb of Job Charnock.",
@@ -956,6 +990,10 @@
       const navBtn = document.getElementById(`nav-${viewName}`);
       if (navBtn) navBtn.classList.add('active');
 
+      if (window.location.search) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+
       window.scrollTo(0, 0);
     }
 
@@ -963,29 +1001,13 @@
     function renderHeritageList() {
       const listContainer = document.getElementById('heritage-list');
       listContainer.innerHTML = heritageSites.map(site => `
-        <div class="heritage-item" onclick="openHeritageDetail(${site.id})">
+        <a class="heritage-item" href="heritage/${site.slug}.html">
           <img src="${site.img}" alt="${site.name}">
           <div class="heritage-item-info">
             <h4>${site.name}</h4>
           </div>
-        </div>
+        </a>
       `).join('');
-    }
-
-    // Open Specific Heritage Site Page
-    function openHeritageDetail(siteId) {
-      const site = heritageSites.find(s => s.id === siteId);
-      if (!site) return;
-
-      const detailContent = document.getElementById('heritage-detail-content');
-      detailContent.innerHTML = `
-        <img src="${site.img}" alt="${site.name}">
-        <h2>${site.name}</h2>
-        <p><strong>Overview:</strong> ${site.desc}</p>
-        <p><strong>History & Significance:</strong> ${site.history}</p>
-      `;
-
-      showView('heritage-detail');
     }
 
     // Populate Gallery Page
@@ -1001,6 +1023,10 @@
     // Initialize Page Content
     renderHeritageList();
     renderGallery();
+    const requestedView = new URLSearchParams(window.location.search).get('view');
+    if (requestedView && document.getElementById(`view-${requestedView}`)) {
+      showView(requestedView);
+    }
 
     const heroImages = [
       "image_folder/kolkata-DIY.avif",
