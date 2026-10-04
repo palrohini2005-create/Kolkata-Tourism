@@ -64,16 +64,39 @@
     }
 
     nav a {
+      position: relative;
       text-decoration: none;
       color: #2C2216;
       font-weight: 600;
       font-size: 0.9rem;
       cursor: pointer;
-      transition: color 0.2s;
+      transition: color 0.2s, transform 0.2s;
     }
 
     nav a:hover, nav a.active {
-      color: #000;
+      color: var(--accent-hover);
+    }
+
+    header nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.5rem;
+      height: 2px;
+      background: var(--accent-gold);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.25s ease;
+    }
+
+    header nav a:hover::after,
+    header nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    header nav a:active {
+      transform: scale(0.94);
     }
 
     header nav a.active {
@@ -141,9 +164,38 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradient(rgba(13, 12, 10, 0.38), rgba(13, 12, 10, 0.62)), url('image_folder/kolkata-DIY.avif') center 54%/cover;
+      background: #100d09;
       margin-bottom: 0;
       color: #FFF;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(13, 12, 10, 0.38), rgba(13, 12, 10, 0.62)), var(--hero-image-current, url('image_folder/kolkata-DIY.avif'));
+      background-position: center 54%;
+      background-size: cover;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(13, 12, 10, 0.38), rgba(13, 12, 10, 0.62)), var(--hero-image-next, url('image_folder/kolkata-DIY.avif'));
+      background-position: center 54%;
+      background-size: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .hero.is-transitioning::after {
+      opacity: 1;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
     }
 
     .hero h2 {
@@ -153,6 +205,20 @@
       letter-spacing: 2px;
       margin-bottom: 0.4rem;
       text-shadow: 0 3px 18px rgba(0, 0, 0, 0.55);
+      background-image: linear-gradient(100deg, #D2A52D 30%, #FFF4BD 50%, #D2A52D 70%);
+      background-size: 250% 100%;
+      background-position: 100% 0;
+      background-clip: text;
+      -webkit-background-clip: text;
+      transition: background-position 0.8s ease, transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .hero h2:hover {
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background-position: 0 0;
+      transform: scale(1.04);
+      filter: drop-shadow(0 0 12px rgba(255, 226, 133, 0.55));
     }
 
     .hero p:first-of-type {
@@ -219,6 +285,12 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.4);
       position: relative;
       min-height: 245px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .landing-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 36px rgba(26, 20, 14, 0.5), 0 0 0 2px rgba(197, 155, 39, 0.65);
     }
 
     .card-img-wrapper {
@@ -231,6 +303,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .landing-card:hover .card-img-wrapper img {
+      transform: scale(1.06);
     }
 
     .card-img-wrapper::after {
@@ -531,6 +608,17 @@
         flex-wrap: wrap;
         justify-content: center;
         gap: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
       }
     }
   </style>
@@ -892,6 +980,37 @@
     // Initialize Page Content
     renderHeritageList();
     renderGallery();
+
+    const heroImages = [
+      "image_folder/kolkata-DIY.avif",
+      "image_folder/Victoria-Memorial_600.jpg",
+      "image_folder/KOLKATA  COVER.jpg",
+      "image_folder/dk.jpg",
+      "image_folder/ChatGPTImageJul10202607_00_09P.jpeg"
+    ];
+    const hero = document.querySelector('.hero');
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let heroImageIndex = 0;
+
+    if (!motionPreference.matches) {
+      window.setInterval(() => {
+        const nextImageIndex = (heroImageIndex + 1) % heroImages.length;
+        const nextImage = new Image();
+        nextImage.onload = () => {
+          hero.style.setProperty('--hero-image-next', `url("${heroImages[nextImageIndex]}")`);
+          hero.classList.add('is-transitioning');
+          window.setTimeout(() => {
+            heroImageIndex = nextImageIndex;
+            hero.style.setProperty('--hero-image-current', `url("${heroImages[heroImageIndex]}")`);
+            hero.classList.remove('is-transitioning');
+          }, 1000);
+        };
+        nextImage.onerror = () => {
+          console.error(`Unable to load hero image: ${heroImages[nextImageIndex]}`);
+        };
+        nextImage.src = heroImages[nextImageIndex];
+      }, 4000);
+    }
   </script>
 </body>
 </html>
