@@ -244,6 +244,113 @@
       letter-spacing: 0.04em;
     }
 
+    .about-kolkata {
+      margin: 3rem 5% 0;
+      display: grid;
+      grid-template-columns: minmax(280px, 1.05fr) minmax(300px, 1.35fr);
+      gap: 0;
+      align-items: stretch;
+      background: linear-gradient(135deg, rgba(22, 18, 12, 0.96), rgba(40, 31, 21, 0.94));
+      border: 1px solid rgba(197, 155, 39, 0.35);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(26, 20, 14, 0.18);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .about-kolkata:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 48px rgba(26, 20, 14, 0.24);
+    }
+
+    .about-kolkata-image {
+      position: relative;
+      min-height: 390px;
+      overflow: hidden;
+      background: #2b220e;
+    }
+
+    .about-kolkata-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(11, 10, 9, 0.16), rgba(11, 10, 9, 0.06));
+    }
+
+    .about-kolkata-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      object-fit: cover;
+      transition: transform 0.6s ease, filter 0.3s ease;
+    }
+
+    .about-kolkata:hover .about-kolkata-image img {
+      transform: scale(1.06);
+      filter: saturate(1.1);
+    }
+
+    .about-kolkata-content {
+      padding: 2.25rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #F7EED8;
+      background: linear-gradient(135deg, rgba(31, 24, 17, 0.82), rgba(43, 34, 22, 0.94));
+    }
+
+    .about-kolkata-content .eyebrow {
+      display: inline-block;
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #D2A52D;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+    }
+
+    .about-kolkata-content h3 {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      line-height: 1.12;
+      margin-bottom: 1rem;
+      color: #F7EED8;
+    }
+
+    .about-kolkata-content p {
+      color: #E5D4A5;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .about-kolkata-points {
+      list-style: none;
+      display: grid;
+      gap: 0.7rem;
+      margin-top: 1.2rem;
+      padding-left: 0;
+    }
+
+    .about-kolkata-points li {
+      position: relative;
+      padding-left: 1.5rem;
+      color: #FDEFC7;
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    .about-kolkata-points li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-gold);
+      font-size: 1.5rem;
+      line-height: 1;
+      top: 0.02rem;
+    }
+
     #view-home .section-title {
       margin: 3rem 5% 2rem;
     }
@@ -596,6 +703,19 @@
         padding: 2rem 5%;
       }
 
+      .about-kolkata {
+        grid-template-columns: 1fr;
+      }
+
+      .about-kolkata-image,
+      .about-kolkata-image img {
+        min-height: 260px;
+      }
+
+      .about-kolkata-content {
+        padding: 1.5rem 1.2rem;
+      }
+
       .hero h2 {
         font-size: 2.7rem;
       }
@@ -682,6 +802,23 @@
       <p style="font-size:0.9rem; max-width:500px;">Explore the heritage, culture, architecture and timeless stories of the City of Joy.</p>
       <button class="btn-gold" onclick="showView('heritage')">EXPLORE HERITAGE</button>
     </div>
+
+    <section class="about-kolkata">
+      <div class="about-kolkata-image">
+        <img src="image_folder/kolkata-DIY.avif" alt="Kolkata skyline and city life">
+      </div>
+      <div class="about-kolkata-content">
+        <span class="eyebrow">About Kolkata</span>
+        <h3>The City of Joy, Culture and Legacy</h3>
+        <p>Kolkata is one of India’s most vibrant and intellectually rich cities, where grand colonial heritage meets the warmth of everyday Bengali life. Its streets are alive with literature, music, art, and the timeless rhythm of the Hooghly river.</p>
+        <p>From the majestic Howrah Bridge and Victoria Memorial to the bustling markets of Gariahat and the soulful lanes of North Kolkata, every corner of the city tells a story. Kolkata is a place where tradition and modern life blend beautifully, making it both deeply rooted and endlessly inspiring.</p>
+        <ul class="about-kolkata-points">
+          <li>Rich cultural heritage and historic landmarks</li>
+          <li>World-famous food, literature and artistic energy</li>
+          <li>Warm hospitality and iconic city experiences</li>
+        </ul>
+      </div>
+    </section>
 
     <div class="section-title">
       <h2>DISCOVER KOLKATA</h2>
